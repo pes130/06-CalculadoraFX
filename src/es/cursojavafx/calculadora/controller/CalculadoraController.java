@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import es.cursojavafx.calculadora.model.Resultado;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -191,12 +192,23 @@ public class CalculadoraController implements Initializable {
 		this.tablaHistorial.getItems().remove(elementoSeleccionado);
 	}
 
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.operando1Col.setCellValueFactory(new PropertyValueFactory<Resultado, Integer>("operando1"));
 		this.operando2Col.setCellValueFactory(new PropertyValueFactory<Resultado, Integer>("operando2"));
 		this.resultadoCol.setCellValueFactory(new PropertyValueFactory<Resultado, Integer>("resultado"));
 		this.operacionCol.setCellValueFactory(new PropertyValueFactory<Resultado, String>("operacion"));
+		
+		this.tablaHistorial.getItems().addListener(new ListChangeListener<Resultado>() {
+
+			@Override
+			public void onChanged(Change<? extends Resultado> c) {
+				System.out.println("Has cambiado algo!!!!!");		
+				System.out.println(c);
+			}
+			
+		});
 
 	}
 
