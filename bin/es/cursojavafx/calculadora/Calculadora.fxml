@@ -35,21 +35,21 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="btn7" mnemonicParsing="false" onAction="#numeroPulsado" text="7" />
-            <Button fx:id="btn8" mnemonicParsing="false" onAction="#numeroPulsado" text="8" GridPane.columnIndex="1" />
-            <Button fx:id="btn9" mnemonicParsing="false" onAction="#numeroPulsado" text="9" GridPane.columnIndex="2" />
-            <Button fx:id="btn4" mnemonicParsing="false" onAction="#numeroPulsado" text="4" GridPane.rowIndex="1" />
-            <Button fx:id="btn5" mnemonicParsing="false" onAction="#numeroPulsado" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button fx:id="btn6" mnemonicParsing="false" onAction="#numeroPulsado" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button fx:id="btn1" mnemonicParsing="false" onAction="#numeroPulsado" text="1" GridPane.rowIndex="2" />
-            <Button fx:id="btn2" mnemonicParsing="false" onAction="#numeroPulsado" text="2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="btn3" mnemonicParsing="false" onAction="#numeroPulsado" text="3" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Button fx:id="btn0" mnemonicParsing="false" onAction="#numeroPulsado" text="0" GridPane.rowIndex="3" />
-            <Button fx:id="btnSuma" minWidth="40.0" mnemonicParsing="false" onAction="#operacionPulsada" text="s" GridPane.columnIndex="3" />
-            <Button fx:id="btnResta" minWidth="40.0" mnemonicParsing="false" onAction="#operacionPulsada" text="-" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-            <Button fx:id="btnPor" minWidth="40.0" mnemonicParsing="false" onAction="#operacionPulsada" text="x" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Button fx:id="btnDiv" minWidth="40.0" mnemonicParsing="false" onAction="#operacionPulsada" text="/" GridPane.columnIndex="3" GridPane.rowIndex="3" />
-            <Button fx:id="btnCalcular" mnemonicParsing="false" onAction="#calcular" text="=" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="7" />
+            <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="8" GridPane.columnIndex="1" />
+            <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="9" GridPane.columnIndex="2" />
+            <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="4" GridPane.rowIndex="1" />
+            <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="6" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="1" GridPane.rowIndex="2" />
+            <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="2" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="3" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="0" GridPane.rowIndex="3" />
+            <Button fx:id="botonPulsado" minWidth="40.0" mnemonicParsing="false" onAction="#botonPulsado" text="+" GridPane.columnIndex="3" />
+            <Button fx:id="botonPulsado" minWidth="40.0" mnemonicParsing="false" onAction="#botonPulsado" text="-" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+            <Button fx:id="botonPulsado" minWidth="40.0" mnemonicParsing="false" onAction="#botonPulsado" text="x" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Button fx:id="botonPulsado" minWidth="40.0" mnemonicParsing="false" onAction="#botonPulsado" text="/" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+            <Button fx:id="btnCalcular" mnemonicParsing="false" onAction="#calcularAction" text="=" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Button fx:id="btnClear" mnemonicParsing="false" onAction="#limpiar" text="C" GridPane.columnIndex="2" GridPane.rowIndex="3" />
          </children>
          <padding>

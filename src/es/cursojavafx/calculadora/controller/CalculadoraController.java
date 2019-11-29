@@ -87,7 +87,10 @@ public class CalculadoraController implements Initializable {
 	@FXML
 	private TableColumn<Resultado, Integer> operando2Col;
 
-	private String operandoActual = "";
+	private String operacionActual = "";
+	
+	private String operando1;
+	private String operando2;
 
 	/**
 	 * Ejecutado cada vez que pulsamos un número del 1 al 9.
@@ -107,39 +110,9 @@ public class CalculadoraController implements Initializable {
 	@FXML
 	void limpiar(ActionEvent event) {
 		this.lblPantalla.setText("");
-		activarOperandos();
-		this.operandoActual = "";
-	}
-
-	/**
-	 * Ejecutado cada vez que pulsamos sobre un botón de operaciòn.
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void operacionPulsada(ActionEvent event) {
-		if (this.operandoActual.isEmpty()) {
-			this.lblPantalla.setText(lblPantalla.getText() + ((Button) event.getSource()).getText());
-			this.operandoActual = ((Button) event.getSource()).getText();
-			if (this.operandoActual.equals("+")) {
-				this.operandoActual = "s";
-			}
-			desactivarOperandos();
-		}
-	}
-
-	private void desactivarOperandos() {
-		this.btnDiv.setDisable(true);
-		this.btnSuma.setDisable(true);
-		this.btnResta.setDisable(true);
-		this.btnPor.setDisable(true);
-	}
-
-	private void activarOperandos() {
-		this.btnDiv.setDisable(false);
-		this.btnSuma.setDisable(false);
-		this.btnResta.setDisable(false);
-		this.btnPor.setDisable(false);
+		this.operando1 = null;
+		this.operacionActual = null;
+		this.operando2 = null;
 	}
 
 	/**
@@ -148,37 +121,102 @@ public class CalculadoraController implements Initializable {
 	 * @param event
 	 */
 	@FXML
-	void calcular(ActionEvent event) {
-		String operacionString = this.lblPantalla.getText();
-		activarOperandos();
-		String[] partes = operacionString.split(this.operandoActual);
-		if (partes.length == 2) {
-			Integer operando1 = Integer.parseInt(partes[0]);
-			Integer operando2 = Integer.parseInt(partes[1]);
-			Integer resultado = 0;
-			switch (this.operandoActual) {
-			case "s":
-				resultado = operando1 + operando2;
-				break;
-			case "-":
-				resultado = operando1 - operando2;
-				break;
-			case "x":
-				resultado = operando1 * operando2;
-				break;
-			case "/":
-				resultado = operando1 / operando2;
-				break;
-			default:
-				System.out.println("Operación desconocida");
+	void calcularAction(ActionEvent event) {
+		if(this.operando1!=null && this.operacionActual!=null && !ultimoCaracterEsOperacion()) {
+			ejecutarCalculo();
+		}
+		
+	}
+	
+	@FXML
+	void botonPulsado(ActionEvent event) {
+		Button btnPulsado = (Button)event.getSource();
+		if (botonEsNumero(btnPulsado)) {
+			this.lblPantalla.setText(this.lblPantalla.getText() + btnPulsado.getText());
+		} else {
+			if(botonEsOperacion(btnPulsado)) {
+				if(this.operando1==null && !this.lblPantalla.getText().isEmpty()) {			
+					// 3 x 
+					this.operando1 = this.lblPantalla.getText();
+					this.operacionActual = btnPulsado.getText();
+					this.lblPantalla.setText(this.lblPantalla.getText() + btnPulsado.getText());
+				} else {
+					if(ultimoCaracterEsOperacion()) {
+						// Ya hay una operación -> cambiamos una por otra			
+						this.lblPantalla.setText(this.lblPantalla.getText().replace(this.operacionActual, btnPulsado.getText()));
+						this.operacionActual=btnPulsado.getText();
+					} else {
+						// 3x2+ Calculamos operación y ponemos resultado como operando1
+						ejecutarCalculo();
+					}
+					
+				}
 			}
-			this.lblPantalla.setText(String.valueOf(resultado));
-			Resultado res = new Resultado(operando1, operando2, this.operandoActual, resultado);
-			this.operandoActual = "";
-			this.tablaHistorial.getItems().add(res);
-
 		}
 	}
+
+	private void ejecutarCalculo() {
+		this.operando2 = this.lblPantalla.getText().replace(this.operando1+this.operacionActual, "");
+		Integer resultado = calcular(this.operando1, this.operacionActual, this.operando2);
+		this.operacionActual = null;
+		this.operando1 = null;
+		this.operando2= null;
+		this.lblPantalla.setText(String.valueOf(resultado));
+	}
+
+	private boolean ultimoCaracterEsOperacion() {
+		return esOperacion(this.lblPantalla.getText().substring(this.lblPantalla.getText().length()-1));
+	}
+	
+	private Integer calcular(String operando1, String operacionActual2, String operando2) {
+		Integer num1 = Integer.parseInt(operando1);
+		Integer num2 = Integer.parseInt(operando2);
+		Integer resultado = 0;
+		switch (operacionActual2) {
+		case "+":
+			resultado = num1 + num2;
+			break;
+		case "-":
+			resultado = num1 - num2;
+			break;
+		case "x":
+			resultado = num1 * num2;
+			break;
+		case "/":
+			resultado = num1 / num2;
+			break;
+		default:
+			System.out.println("Operación desconocida");
+		}
+		return resultado;
+	}
+
+	private boolean botonEsNumero(Button btn) {
+		String txt = btn.getText();
+		if ("0123456789".contains(txt)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private boolean botonEsOperacion(Button btn) {
+		String txt = btn.getText();
+		if (esOperacion(txt)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	private boolean esOperacion(String texto) {
+		if ("+/x-".contains(texto)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 
 	/**
 	 * Para borrar una fila.
