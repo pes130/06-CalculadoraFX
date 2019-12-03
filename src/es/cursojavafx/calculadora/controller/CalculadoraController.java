@@ -23,47 +23,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 public class CalculadoraController implements Initializable {
 
 	@FXML
-	private Button btn7;
-
-	@FXML
-	private Button btn8;
-
-	@FXML
-	private Button btn9;
-
-	@FXML
-	private Button btn4;
-
-	@FXML
-	private Button btn5;
-
-	@FXML
-	private Button btn6;
-
-	@FXML
-	private Button btn1;
-
-	@FXML
-	private Button btn2;
-
-	@FXML
-	private Button btn3;
-
-	@FXML
-	private Button btn0;
-
-	@FXML
-	private Button btnSuma;
-
-	@FXML
-	private Button btnResta;
-
-	@FXML
-	private Button btnPor;
-
-	@FXML
-	private Button btnDiv;
-	@FXML
 	private TextField lblPantalla;
 
 	@FXML
@@ -88,7 +47,7 @@ public class CalculadoraController implements Initializable {
 	private TableColumn<Resultado, Integer> operando2Col;
 
 	private String operacionActual = "";
-	
+
 	private String operando1;
 	private String operando2;
 
@@ -122,55 +81,60 @@ public class CalculadoraController implements Initializable {
 	 */
 	@FXML
 	void calcularAction(ActionEvent event) {
-		if(this.operando1!=null && this.operacionActual!=null && !ultimoCaracterEsOperacion()) {
+		if (this.operando1 != null && this.operacionActual != null && !ultimoCaracterEsOperacion()) {
 			ejecutarCalculo();
 		}
-		
+
 	}
-	
+
 	@FXML
 	void botonPulsado(ActionEvent event) {
-		Button btnPulsado = (Button)event.getSource();
+		Button btnPulsado = (Button) event.getSource();
 		if (botonEsNumero(btnPulsado)) {
 			this.lblPantalla.setText(this.lblPantalla.getText() + btnPulsado.getText());
 		} else {
-			if(botonEsOperacion(btnPulsado)) {
-				if(this.operando1==null && !this.lblPantalla.getText().isEmpty()) {			
-					// 3 x 
+			if (botonEsOperacion(btnPulsado)) {
+				if (this.operando1 == null && !this.lblPantalla.getText().isEmpty()) {
+					// 3 x
 					this.operando1 = this.lblPantalla.getText();
 					this.operacionActual = btnPulsado.getText();
 					this.lblPantalla.setText(this.lblPantalla.getText() + btnPulsado.getText());
 				} else {
-					if(ultimoCaracterEsOperacion()) {
-						// Ya hay una operación -> cambiamos una por otra			
-						this.lblPantalla.setText(this.lblPantalla.getText().replace(this.operacionActual, btnPulsado.getText()));
-						this.operacionActual=btnPulsado.getText();
+					if (ultimoCaracterEsOperacion()) {
+						// Ya hay una operación -> cambiamos una por otra
+						this.lblPantalla.setText(
+								this.lblPantalla.getText().replace(this.operacionActual, btnPulsado.getText()));
+						this.operacionActual = btnPulsado.getText();
 					} else {
 						// 3x2+ Calculamos operación y ponemos resultado como operando1
 						ejecutarCalculo();
 					}
-					
+
 				}
 			}
 		}
 	}
 
 	private void ejecutarCalculo() {
-		this.operando2 = this.lblPantalla.getText().replace(this.operando1+this.operacionActual, "");
-		Integer resultado = calcular(this.operando1, this.operacionActual, this.operando2);
+		this.operando2 = this.lblPantalla.getText().replace(this.operando1 + this.operacionActual, "");
+		Integer num1 = Integer.valueOf(this.operando1);
+		Integer num2 = Integer.valueOf(this.operando2);
+		
+		Integer resultadoOperacion = calcular(num1, this.operacionActual,num2);
+		Resultado resultado = new Resultado(num1, num2, operacionActual, resultadoOperacion);
+		this.tablaHistorial.getItems().add(resultado);
+		
 		this.operacionActual = null;
 		this.operando1 = null;
-		this.operando2= null;
-		this.lblPantalla.setText(String.valueOf(resultado));
+		this.operando2 = null;
+		this.lblPantalla.setText(String.valueOf(resultadoOperacion));
 	}
 
 	private boolean ultimoCaracterEsOperacion() {
-		return esOperacion(this.lblPantalla.getText().substring(this.lblPantalla.getText().length()-1));
+		return esOperacion(this.lblPantalla.getText().substring(this.lblPantalla.getText().length() - 1));
 	}
-	
-	private Integer calcular(String operando1, String operacionActual2, String operando2) {
-		Integer num1 = Integer.parseInt(operando1);
-		Integer num2 = Integer.parseInt(operando2);
+
+	private Integer calcular(Integer num1, String operacionActual2, Integer num2) {
 		Integer resultado = 0;
 		switch (operacionActual2) {
 		case "+":
@@ -199,7 +163,7 @@ public class CalculadoraController implements Initializable {
 			return false;
 		}
 	}
-	
+
 	private boolean botonEsOperacion(Button btn) {
 		String txt = btn.getText();
 		if (esOperacion(txt)) {
@@ -208,7 +172,7 @@ public class CalculadoraController implements Initializable {
 			return false;
 		}
 	}
-	
+
 	private boolean esOperacion(String texto) {
 		if ("+/x-".contains(texto)) {
 			return true;
@@ -216,7 +180,6 @@ public class CalculadoraController implements Initializable {
 			return false;
 		}
 	}
-	
 
 	/**
 	 * Para borrar una fila.
@@ -230,22 +193,21 @@ public class CalculadoraController implements Initializable {
 		this.tablaHistorial.getItems().remove(elementoSeleccionado);
 	}
 
-	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		this.operando1Col.setCellValueFactory(new PropertyValueFactory<Resultado, Integer>("operando1"));
 		this.operando2Col.setCellValueFactory(new PropertyValueFactory<Resultado, Integer>("operando2"));
 		this.resultadoCol.setCellValueFactory(new PropertyValueFactory<Resultado, Integer>("resultado"));
 		this.operacionCol.setCellValueFactory(new PropertyValueFactory<Resultado, String>("operacion"));
-		
+
 		this.tablaHistorial.getItems().addListener(new ListChangeListener<Resultado>() {
 
 			@Override
 			public void onChanged(Change<? extends Resultado> c) {
-				System.out.println("Has cambiado algo!!!!!");		
+				System.out.println("Has cambiado algo!!!!!");
 				System.out.println(c);
 			}
-			
+
 		});
 
 	}
