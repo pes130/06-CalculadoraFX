@@ -51,16 +51,7 @@ public class CalculadoraController implements Initializable {
 	private String operando1;
 	private String operando2;
 
-	/**
-	 * Ejecutado cada vez que pulsamos un número del 1 al 9.
-	 * 
-	 * @param event
-	 */
-	@FXML
-	void numeroPulsado(ActionEvent event) {
-		this.lblPantalla.setText(lblPantalla.getText() + ((Button) event.getSource()).getText());
-	}
-
+	
 	/**
 	 * Ejecutado cada vez que le damos al botón C de limpiar.
 	 * 

@@ -35,8 +35,8 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="7" />
-            <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="8" GridPane.columnIndex="1" />
+            <Button fx:id="botonPulsado" onAction="#botonPulsado" text="_7" />
+            <Button fx:id="botonPulsado" onAction="#botonPulsado" text="_8" GridPane.columnIndex="1" />
             <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="9" GridPane.columnIndex="2" />
             <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="4" GridPane.rowIndex="1" />
             <Button fx:id="botonPulsado" mnemonicParsing="false" onAction="#botonPulsado" text="5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
